@@ -1,68 +1,87 @@
 # 🎓 Student Scholarship Requests System
-> **A High-Performance Full-Stack Application for Automated Grant Management**
+> **A Decoupled Full-Stack Web Application for Automated Grant Management**
 
-![Node.js](https://img.shields.io/badge/Backend-Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
-![Express](https://img.shields.io/badge/Framework-Express-000000?style=for-the-badge&logo=express&logoColor=white)
-![React](https://img.shields.io/badge/Frontend-React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![Tailwind](https://img.shields.io/badge/Styling-Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
-![Git](https://img.shields.io/badge/VCS-Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+---
+
+## 🔗 Quick Links & Documentation
+* 🖥️ **[Frontend Client Repository](https://github.com/Chana-Winefeld/student-grant-management-system/tree/main/client)** — React components and UI application logic.
+* ⚙️ **[Backend Server API](https://github.com/Chana-Winefeld/student-grant-management-system/tree/main/server)** — Node.js runtime and Express endpoint configurations.
+* 📦 **[Production Codebase](https://github.com/Chana-Winefeld/student-grant-management-system)** — Main deployment gate and cascading configuration setup.
 
 ---
 
 ## 💻 System Core Capabilities
 
 ### 🔹 Unified Client Application (Frontend)
-* **Modular Interface:** Built using React functional components with deterministic state flow.
-* **Document Engine:** Integrated file selection system optimized for secure document intake.
-* **State Sync:** Client-side tracking logic ensuring modern UX and fast rendering times.
+* **Modular UI Architecture:** Built using React functional components with deterministic state flow.
+* **Asynchronous Document Intake:** Integrated file selection system optimized for secure document handling.
+* **Dynamic State Sync:** Client-side tracking logic ensuring zero-refresh rendering and fluid user experience.
 
 ### 🔹 Secure Gateway API (Backend)
-* **Decoupled Architecture:** Express router handling clean request/response cycles.
-* **Confidential Asset Handling:** Isolated file system pipeline dynamically managing incoming data streams inside `/uploads`.
-* **Security Matrix:** Zero-exposure configuration model powered by runtime environment abstraction.
+* **Decoupled REST Routing:** Express router handling clean, high-performance request/response cycles.
+* **Confidential Asset Isolation:** Dedicated file system pipeline dynamically managing incoming data streams within `/uploads`.
+* **Environment-Level Protection:** Multi-environment runtime encapsulation powered by `dotenv` to secure infrastructure ports and credentials.
 
 ---
 
-## 🛠️ Deep Tech Stack & Architecture
+## 🛠️ System Architecture & Stack
 
-```🛡️ Production Environment
- ├── Client (React Application) ──► Axios / Fetch Gateway
- │                                        │
- ◄── JSON Data / Uploaded Assets ─────────┴──► Server (Node.js + Express API)
-                                                   ├── Controllers (.js)
-                                                   ├── Storage (/uploads)
-                                                   └── Secure Keys (.env)
-    
-📦 Dependency InfrastructureLayerComponentImplementation / Tech RoleFrontendReact.js CoreDynamic UI lifecycle rendering & client routingStylingTailwind CSSUtility-first layout management and UI/UX responsivenessBackendNode.js RuntimeEvent-driven architecture for rapid API compilationRoutingExpress.jsRESTful API endpoint configuration and HTTP handlersSecurityDotenvMicroservice-level separation of server port & secrets📂 Repository BlueprintPlaintextStudent-Scholarship-Requests/
+### 📂 Dynamic Data Flow Diagram
+```text
+ ┌────────────────────────────────┐         Axios HTTP         ┌──────────────────────────────┐
+ │     Client (React.js UI)       │ ─────────────────────────> │   Server (Node.js & Express) │
+ │                                │ <───────────────────────── │                              │
+ │  - Functional Components        │          JSON Data         │  - REST Endpoints / API      │
+ │  - Reactive View Layer         │       & Uploaded Assets    │  - Secure File Storage       │
+ └────────────────────────────────┘                            └──────────────────────────────┘
+ 📦 Dependency Infrastructure
+Frontend Environment: React.js Core Engine
+
+UI Layout & Styling: Tailwind CSS (Utility-first, fluid layout)
+
+API Runtime Environment: Node.js Asynchronous Platform
+
+Server Framework: Express.js (HTTP middleware & API routing handler)
+
+Credential Encryption & Config: Dotenv Module
+
+📂 Repository Blueprint
+Student-Scholarship-Requests/
 │
-├── client/                     # Frontend Application
-│   ├── public/                 # Client deployment assets
-│   └── src/                    # UI Components, Layout Logic & Styling
+├── client/                     # Frontend Interface Layer
+│   ├── public/                 # Deployment compilation assets
+│   └── src/                    # Modular Components, Views & API layers
 │
 ├── server/                     # Backend API Gateway
-│   ├── api/                    # System Endpoints & Request Handlers
-│   ├── uploads/                # Isolated student documentation vault
-│   ├── app.js                  # Main Express bootstrap configuration
-│   └── .env                    # Application configuration (Strictly Local)
+│   ├── api/                    # System Endpoints & Application Controllers
+│   ├── uploads/                # Encapsulated student documentation vault
+│   └── app.js                  # Main Express bootstrap configuration
 │
-└── .gitignore                  # Active repository cascading exclude rules
-⚙️ Core Setup & Execution📥 1. Backend API LayerBash# Navigate to API core
+└── .gitignore                  # Production-grade global repository ignore rules
+⚙️ Local Development Setup
+📥 1. Backend API Layer Activation
+# Navigate to the server root
 cd server
 
-# Install isolated dependencies
+# Install verified repository dependencies
 npm install
 
-# Initialize local environment variables
-# Create a .env file and assign your runtime port (e.g., PORT=5000)
+# System Environment Initialization:
+# Create a local '.env' file inside the server directory and configure your port:
+# PORT=5000
 
-# Fire up the development gateway
+# Launch the backend development gateway
 npm start
-📤 2. Client Application LayerBash# Jump into the UI directory
+📤 2. Client Application Layer Activation
+# Open a new terminal window and navigate to the client root
 cd client
 
-# Install frontend modules
+# Install frontend node modules
 npm install
 
-# Boot the React dev server
+# Run the local Webpack compiler & start the React app
 npm start
-🔒 Version Control & Security StandardsIsolated Credentials: The codebase adheres to strict security principles. No tokens, database uris, or configuration parameters are committed.Casced Ignore Pipeline: Lightweight footprint maintained via advanced .gitignore configuration, enforcing complete exclusion of node_modules and local environment variables.
+🔒 Security & Version Control Standards
+Zero Secret Exposure: Credentials, local server configurations, and development parameters are strictly confined to independent .env files and never tracked.
+
+Optimized Storage Footprint: Version control clutter is mitigated using a robust cascading configuration, keeping heavy compiled node_modules and local testing assets outside the remote cloud repository.
