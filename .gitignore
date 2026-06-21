@@ -1,0 +1,27 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies - מתעלם מכל תיקיית ספריות בכל עומק בפרויקט
+**/node_modules/
+node_modules/
+**/.pnp
+.pnp.js
+
+# testing
+**/coverage/
+
+# production - מתעלם מתיקיות הבנייה בכל תתי-התיקיות
+**/build/
+**/dist/
+
+# secrets & environment variables - קריטי לפרויקט נוד וריאקט כדי לשמור על סודיות
+**/.env
+**/.env.local
+**/.env.development.local
+**/.env.test.local
+**/.env.production.local
+
+# logs
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+**/.DS_Store

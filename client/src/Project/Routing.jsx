@@ -1,0 +1,56 @@
+import { BrowserRouter, Route, Routes } from "react-router";
+import { Nav } from "./comps/Nav";
+import { Home } from "./comps/Home";
+import { Login } from "./comps/Login";
+import { SendRequest } from "./comps/SendRequest";
+import { ViewStatus } from "./comps/ViewStatus";
+import { PersonalForm } from "./comps/PersonalForm";
+import { FamilyForm } from "./comps/FamilyForm";
+import { BankForm } from "./comps/BankForm";
+import { CourseForm } from "./comps/CourseForm";
+import { FileUploadForm } from "./comps/FileUploadForm";
+import { Verify } from "./comps/Verify";
+import { Apply } from "./comps/Apply";
+import { Register } from "./comps/Register";
+import { ViewRequests } from "./comps/ViewRequests";
+import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
+import { Navigate } from "react-router";
+
+const AdminRoute = ({ children }) => {
+  const token = Cookies.get("token");
+  try {
+    const decoded = jwtDecode(token);
+    if (decoded?.role === 'admin') return children;
+  } catch {}
+  return <Navigate to="/Home" replace />;
+};
+
+export const Routing = () => {
+  return (
+    <>
+      <Nav></Nav>
+      <Routes>
+        <Route path="" element={<Home></Home>}></Route>
+        <Route path="Register" element={<Register></Register>}></Route>
+        <Route path="Home" element={<Home></Home>}></Route>
+        <Route path="Login" element={<Login></Login>}></Route>
+        <Route path="SendRequest" element={<SendRequest></SendRequest>}>
+          <Route
+            path="PersonalForm"
+            element={<PersonalForm></PersonalForm>}
+          ></Route>
+          <Route index element={<PersonalForm></PersonalForm>}></Route>
+          <Route path="FamilyForm" element={<FamilyForm></FamilyForm>}></Route>
+          <Route path="CourseForm" element={<CourseForm></CourseForm>}></Route>
+          <Route path="BankForm" element={<BankForm></BankForm>}></Route>
+          <Route path="FileUploadForm" element={<FileUploadForm></FileUploadForm>}></Route>
+          <Route path="Verify" element={<Verify></Verify>}></Route>
+        </Route>
+        <Route path="ViewStatus" element={<ViewStatus></ViewStatus>}></Route>
+        <Route path="ViewRequests" element={<AdminRoute><ViewRequests /></AdminRoute>} />
+        <Route path="Apply" element={<Apply></Apply>}></Route>
+      </Routes>
+    </>
+  );
+};

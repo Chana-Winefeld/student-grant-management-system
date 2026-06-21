@@ -1,0 +1,182 @@
+import React, { useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  TextField,
+  MenuItem,
+  Typography,
+} from "@mui/material";
+import useSessionStorage, {
+  getSessionStorageValue,
+} from "../redux/useSessionStorage";
+import { useDispatch } from "react-redux";
+import { setCurrentRequest } from "../redux/RequestSlice";
+
+const inputStyle = {
+  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    borderColor: "#FF7A00",
+  },
+  "& .MuiInputLabel-root.Mui-focused": {
+    color: "#FF7A00",
+  },
+  "&.Mui-focused fieldset": {
+    borderColor: "#ff9800",
+    borderWidth: 2,
+  },
+  "&.Mui-error fieldset": {
+    borderColor: "#d32f2f",
+  },
+};
+
+const MAJORS = [
+  "מדעי המחשב",
+  "חשבונאות",
+  "פסיכולוגיה",
+  "חינוך",
+  "ניהול",
+  "אדריכלות",
+  "הנדסת תוכנה",
+  "משפטים",
+  "תרפיה",
+  "מגמה אחרת",
+];
+
+export const CourseForm = ({ onSubmit, onCancel }) => {
+  const [values, setValues] = useSessionStorage("CourseForm", {
+    major: "",
+    instituteName: "",
+    yearsOfStudy: "",
+    annualTuition: "",
+  });
+
+  const [errors, setErrors] = React.useState({});
+
+  const validateField = (field, value) => {
+    let error = "";
+
+    switch (field) {
+      case "major":
+        if (!value) error = "נא לבחור מגמה";
+        break;
+
+      case "instituteName":
+        if (!value.trim()) {
+          error = "נא להזין שם מוסד";
+        } else if (value.trim().length < 2) {
+          error = "שם מוסד חייב להכיל לפחות 2 תווים";
+        }
+        break;
+
+      case "annualTuition":
+        if (!value) {
+          error = "נא להזין שכר לימוד";
+        } else if (!/^\d+$/.test(value)) {
+          error = "שכר לימוד חייב להכיל ספרות בלבד";
+        } else if (Number(value) < 1000) {
+          error = "שכר לימוד נראה נמוך מדי";
+        }
+        break;
+
+      case "yearsOfStudy":
+        if (!value) {
+          error = "נא להזין שנות לימוד";
+        } else if (!/^\d+$/.test(value)) {
+          error = "שנות לימוד חייבות להיות מספר";
+        } else if (Number(value) < 1 || Number(value) > 10) {
+          error = "שנות לימוד חייבות להיות בין 1 ל־10";
+        }
+        break;
+
+      default:
+        break;
+    }
+
+    setErrors((prev) => ({ ...prev, [field]: error || undefined }));
+    return !error;
+  };
+
+  const handleChange = (field) => (e) => {
+    setValues((prev) => ({ ...prev, [field]: e.target.value }));
+    setErrors((prev) => ({ ...prev, [field]: undefined }));
+  };
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    return () => {
+      const currentValues = getSessionStorageValue("CourseForm");
+      dispatch(
+        setCurrentRequest({
+          key: "courseDetails",
+          value: currentValues,
+        })
+      );
+    };
+  }, [dispatch]);
+
+  return (
+    <Card sx={{ width: "100%", maxWidth: 500, p: 2, direction: "rtl" }}>
+      <CardContent>
+        <Typography variant="h6" sx={{ mb: 3, textAlign: "center" }}>
+          פרטי לימודים
+        </Typography>
+
+        <TextField
+          select
+          label="מגמה"
+          fullWidth
+          sx={{ mb: 2, ...inputStyle }}
+          value={values.major}
+          onChange={handleChange("major")}
+          onBlur={() => validateField("major", values.major)}
+          error={!!errors.major}
+          helperText={errors.major}
+          InputProps={{ style: { textAlign: "right" } }}
+        >
+          {MAJORS.map((m) => (
+            <MenuItem key={m} value={m}>
+              {m}
+            </MenuItem>
+          ))}
+        </TextField>
+
+        <TextField
+          label="שם מוסד הלימודים"
+          fullWidth
+          sx={{ mb: 2, ...inputStyle }}
+          value={values.instituteName}
+          onChange={handleChange("instituteName")}
+          onBlur={() => validateField("instituteName", values.instituteName)}
+          error={!!errors.instituteName}
+          helperText={errors.instituteName}
+          InputProps={{ style: { textAlign: "right" } }}
+        />
+
+        <TextField
+          label="שנות לימוד"
+          fullWidth
+          sx={{ mb: 2, ...inputStyle }}
+          value={values.yearsOfStudy}
+          onChange={handleChange("yearsOfStudy")}
+          onBlur={() => validateField("yearsOfStudy", values.yearsOfStudy)}
+          error={!!errors.yearsOfStudy}
+          helperText={errors.yearsOfStudy}
+          inputMode="numeric"
+          InputProps={{ style: { textAlign: "right" } }}
+        />
+
+        <TextField
+          label="שכר לימוד שנתי (₪)"
+          fullWidth
+          sx={{ mb: 2, ...inputStyle }}
+          value={values.annualTuition}
+          onChange={handleChange("annualTuition")}
+          onBlur={() => validateField("annualTuition", values.annualTuition)}
+          error={!!errors.annualTuition}
+          helperText={errors.annualTuition}
+          inputMode="numeric"
+          InputProps={{ style: { textAlign: "right" } }}
+        />
+      </CardContent>
+    </Card>
+  );
+};

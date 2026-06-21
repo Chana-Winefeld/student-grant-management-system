@@ -1,0 +1,160 @@
+import {
+  Card,
+  CardContent,
+  Typography,
+  Box,
+  Divider,
+  Chip,
+  Grid,
+} from "@mui/material";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
+import axios from "axios";
+import useSessionStorage from "../redux/useSessionStorage";
+
+export const ViewStatus = () => {
+const [requestDetails, setRequestDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const token = Cookies.get("token");
+
+  useEffect(() => {
+    const fetchStatus = async () => {
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+      try {
+        const response = await axios.get("http://localhost:5000/api/requests/my-status", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setRequestDetails(response.data);
+      } catch (error) {
+        console.error("Error fetching status:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStatus();
+  }, [token]);
+
+  const getStatusLabel = (status) => {
+    switch (status) {
+      case "submitted": return "בהמתנה";
+      case "approved":  return "מאושרת";
+      case "rejected":  return "נדחתה";
+      case "draft":     return "טיוטה";
+      default:          return status;
+    }
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "submitted": return "primary";
+      case "approved":  return "success";
+      case "rejected":  return "error";
+      default:          return "default";
+    }
+  };
+
+  if (loading) {
+    return (
+      <Box sx={{ textAlign: "center", mt: 10 }}>
+        <Typography variant="h6">טוען נתונים...</Typography>
+      </Box>
+    );
+  }
+
+  if (requestDetails) {
+    return (
+      <Box
+        sx={{
+          maxWidth: 1000,
+          mx: "auto",
+          mt: 6,
+          p: 2,
+          textAlign: "center",
+          gap: 10,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <Typography variant="h4" fontWeight={600} textAlign="center" mb={3}>
+          סטטוס בקשת מלגה
+        </Typography>
+
+        <Card sx={{ borderRadius: 3, boxShadow: 3 }}>
+          <CardContent>
+            <Typography variant="h6" fontWeight={500}>
+              פרטי בקשה
+            </Typography>
+            <Divider sx={{ my: 2 }} />
+
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <Typography fontWeight={600}>מספר בקשה:</Typography>
+                <Typography>REQ - 00{requestDetails.__v + 1}</Typography>
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <Typography fontWeight={600}>שם מבקש/ת:</Typography>
+                <Typography>
+                  {requestDetails.personalDetails?.firstName}{" "}
+                  {requestDetails.personalDetails?.lastName}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <Typography fontWeight={600}>תאריך הגשה:</Typography>
+                <Typography>
+                  {new Date(requestDetails.updatedAt).toLocaleDateString("he-IL")}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <Typography fontWeight={600}>תאריך פתיחת הבקשה:</Typography>
+                <Typography>
+                  {new Date(requestDetails.createdAt).toLocaleDateString("he-IL")}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Typography fontWeight={600}>סטטוס:</Typography>
+                <Chip
+                  label={getStatusLabel(requestDetails.status)}
+                  color={getStatusColor(requestDetails.status)}
+                  variant="outlined"
+                  sx={{ mt: 1 }}
+                />
+              </Grid>
+            </Grid>
+
+            <Divider sx={{ my: 3 }} />
+          </CardContent>
+        </Card>
+      </Box>
+    );
+  }
+
+  return (
+    <Box
+      sx={{
+        maxWidth: 600,
+        mx: "auto",
+        mt: 6,
+        p: 2,
+        textAlign: "center",
+      }}
+    >
+      <Typography variant="h5" fontWeight={600} mb={3}>
+        לא נמצאה בקשת מלגה עבור המשתמש הנוכחי.
+      </Typography>
+      <Typography variant="body1">
+        אנא הגש בקשת מלגה חדשה דרך טופס ההגשה.
+      </Typography>
+    </Box>
+  );
+};
