@@ -13,17 +13,13 @@
 
 <br/>
 
-<img src="./screenshots/banner.png" alt="Student Grant Management System banner" width="100%"/>
+<img src="./screenshots/admin-requests.png" alt="Student Grant Management System preview" width="100%"/>
 
 <br/>
 
 **[⭐ Star this repo](https://github.com/Chana-Winefeld/student-grant-management-system) · [🐛 Report a Bug](https://github.com/Chana-Winefeld/student-grant-management-system/issues) · [💡 Request a Feature](https://github.com/Chana-Winefeld/student-grant-management-system/issues)**
 
 </div>
-
-<br/>
-
-> 💡 **Note:** The banner image points to `./screenshots/banner.png` — add a real screenshot there once you have one (see [Screenshots](#-screenshots) below for exactly what to capture and where to save it).
 
 ---
 
@@ -168,13 +164,15 @@ App
 
 <div align="center">
 
-| Home Page | Application Form | Admin Dashboard |
-|---|---|---|
-| <img src="./screenshots/home.png" width="280"/> | <img src="./screenshots/application-form.png" width="280"/> | <img src="./screenshots/admin-dashboard.png" width="280"/> |
+### 📋 Request Status — Student View
+<img src="./screenshots/status.png" alt="View Request Status" width="80%"/>
+
+<br/>
+
+### 🛠️ All Requests — Admin Dashboard
+<img src="./screenshots/admin-requests.png" alt="Admin Requests Dashboard" width="80%"/>
 
 </div>
-
-> 📸 Save your screenshot files in a `screenshots/` folder at the **root of the repo** (same level as `client/` and `server/`), then reference them here with a relative path like `./screenshots/home.png`. See exactly which pages to capture below.
 
 ---
 
