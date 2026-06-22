@@ -95,15 +95,13 @@ The goal of the project is to replace a manual, paper-based grant request proces
 
 | Layer | Technology |
 |---|---|
-| **Frontend** | React, React Router, Context API / Redux *(adjust to what you used)* |
+| **Frontend** | React, React Router, Context API |
+| **Forms** | React Hook Form |
+| **UI / Styling** | Material UI (MUI) |
 | **Backend** | Node.js, Express.js |
 | **Database** | MongoDB (Mongoose ODM) |
 | **Authentication** | JWT, HTTP-only cookies |
-| **File Storage** | Server-side storage / GridFS *(adjust to your implementation)* |
-| **Styling** | CSS Modules / Tailwind / MUI *(adjust to what you used)* |
-| **Tooling** | Vite / Create React App, ESLint, Prettier |
-
-> ✏️ Edit this table to match the exact libraries you used (form library, state manager, styling solution, etc.) — it's one of the first things reviewers check.
+| **Tooling** | Create React App (CRA) |
 
 ---
 
